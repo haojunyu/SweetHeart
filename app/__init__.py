@@ -1,8 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # coding=utf-8
 
 from flask import Flask
-from flask.ext.sqlachemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from config import config
 
 db = SQLAlchemy()
@@ -25,4 +25,3 @@ def create_app(config_name):
   # app.register_blueprint(api_1_0_blueprint, url_prefix='/api/v1.0')
 
   return app
-
