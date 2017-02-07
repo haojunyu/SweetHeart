@@ -15,14 +15,14 @@ class Config:
 # 三个环境可以设置不同的数据库
 class DevelopmentConfig(Config):
   DEBUG = True
-  SQLALCHEMY_DATABASE_URI = 'mysql://hjy@hjy:123.206.190.111/SweetHeart'
+  SQLALCHEMY_DATABASE_URI = 'mysql://hjy:hjy@localhost/SweetHeart'
 
 class TestingConfig(Config):
   TESTING = True
-  SQLALCHEMY_DATABASE_URI = 'mysql://hjy@hjy:123.206.190.111/SweetHeart'
+  SQLALCHEMY_DATABASE_URI = 'mysql://hjy:hjy@localhost/SweetHeart'
 
 class ProductionConfig(Config):
-  SQLALCHEMY_DATABASE_URI = 'mysql://hjy@hjy:123.206.190.111/SweetHeart'
+  SQLALCHEMY_DATABASE_URI = 'mysql://hjy:hjy@localhost/SweetHeart'
 
 # 通过config[name]来选择不同的配置环境
 config = {

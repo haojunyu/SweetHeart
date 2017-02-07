@@ -17,11 +17,11 @@ def create_app(config_name):
 
 
   # 注册主程序蓝本，解决路由和自定义错误页面处理程序
-  from .main import main as main_blueprint
-  app.register_blueprint(main_blueprint)
+  #from .main import main as main_blueprint
+  #app.register_blueprint(main_blueprint)
 
   # 注册REST Web服务蓝本
-  # from .api_1_0 import api as api_1_0_blueprint
-  # app.register_blueprint(api_1_0_blueprint, url_prefix='/api/v1.0')
+  from .api_1_0 import api as api_1_0_blueprint
+  app.register_blueprint(api_1_0_blueprint, url_prefix='/api/v1.0')
 
   return app
