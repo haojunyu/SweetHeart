@@ -15,7 +15,7 @@ class Config:
 # 三个环境可以设置不同的数据库
 class DevelopmentConfig(Config):
   DEBUG = True
-  SQLALCHEMY_DATABASE_URI = 'mysql://hjy:hjy@localhost/SweetHeart'
+  SQLALCHEMY_DATABASE_URI = 'mysql://hjy:hjy@localhost/SweetHeart?charset=utf8'
 
 class TestingConfig(Config):
   TESTING = True
