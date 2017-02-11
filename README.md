@@ -26,6 +26,7 @@ restful api
 * tests/  单元测试
   * __init__.py
   * test*.py
+* imgs/ 小程序所使用的图片
 * venv/ 这里是开发所需要的python虚拟环境，用virtualenvwrapper管理后，该文件在$HOME/.virtualenv/下面
 * serverConfig/ 这里存放服务器配置时使用的nginx，uwsgi配置文件以及https证书
 * requirements.txt 项目所有依赖包 `pip freeze > requirements.txt`
