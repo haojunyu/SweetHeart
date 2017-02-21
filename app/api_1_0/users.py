@@ -2,8 +2,10 @@ from flask import jsonify, request, url_for
 from . import api
 from .. import db
 from ..models import User
+from .authentication import auth
 
 @api.route('/users')
+#@auth.login_required
 def get_users():
   users = User.query.all()
   return jsonify({'users' : [user.to_json() for user in users]})
