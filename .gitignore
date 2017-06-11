@@ -2,3 +2,4 @@
 *.swp
 migrations/*
 tmp/*
+imgs/upload

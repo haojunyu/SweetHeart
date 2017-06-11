@@ -20,13 +20,13 @@ def verify_password(openid_or_token, password):
   user = User.verify_auth_token(openid_or_token)
   if user:
     # token登录
-    print 'token'
+    print 'token login'
     g.token_used = True
   else:
     user = User.query.filter_by(openId=openid_or_token).first()
     if user:
       # openId登录
-      print 'token'
+      print 'openid login'
       g.token_used = False
     else:
       # 非token和openId登录

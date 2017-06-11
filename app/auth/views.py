@@ -19,7 +19,7 @@ def login():
 
   # 用js_code，appid，secret，grant_type向微信服务器获取session_key,openid,expires_in
   data={}
-  data['appid'] = current_app.config['APPID']
+  data['appid'] = current_app.config['APP_ID']
   data['secret'] = current_app.config['SECRET_KEY']
   data['js_code'] = code
   data['grant_type'] = 'authorization_code'
@@ -57,7 +57,7 @@ def login():
     login_user(user, True)
     token = user.generate_auth_token(expiration=expires_in) 
     print 'token: %s' % token
-    return jsonify({'token': token,'expiration': expires_in})
+    return jsonify({'userId': user.id, 'token': token,'expiration': expires_in})
 
   return str(res)
 
