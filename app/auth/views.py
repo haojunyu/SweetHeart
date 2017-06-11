@@ -38,9 +38,13 @@ def login():
     if decrypt(session_key, encryptedData, iv) != data['appid']:
       raise ValidationError('Invalid encryptedData!')
 
+    # 默认用户为老用户
+    is_first = False
+
     # 根据openid是否插入用户
     user = User.query.filter_by(openId=openid).first()
     if user is None:
+      is_first = True
       print('add user: %s' % rawData)
       rData = json.loads(rawData)
       user = User(openId=openid,
@@ -55,9 +59,9 @@ def login():
 
     # 登录用户，并返回由openid和SECRET_KEY构成的token
     login_user(user, True)
-    token = user.generate_auth_token(expiration=expires_in) 
+    token = user.generate_auth_token(expiration=expires_in)
     print 'token: %s' % token
-    return jsonify({'userId': user.id, 'token': token,'expiration': expires_in})
+    return jsonify({'userId': user.id, 'is_first':is_first, 'token': token,'expiration': expires_in})
 
   return str(res)
 
