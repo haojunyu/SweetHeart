@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
   province = db.Column(db.String(40))
   country = db.Column(db.String(40))
   avatarUrl = db.Column(db.String(200))
+  cashbox = db.Column(db.Numeric(8,2), default=0.0)
   comments = db.relationship('Comment', backref='user', lazy='dynamic')
   orders = db.relationship('Order', backref='user', lazy='dynamic')
 
@@ -36,7 +37,8 @@ class User(UserMixin, db.Model):
       'city'  : self.city,
       'province'  : self.province,
       'country'  : self.country,
-      'avatarUrl'  : self.avatarUrl
+      'avatarUrl'  : self.avatarUrl,
+      'cashbox' : str(self.cashbox)
     }
     return json_user
 
@@ -50,14 +52,15 @@ class User(UserMixin, db.Model):
     province = json_user.get('province')
     country = json_user.get('country')
     avatarUrl = json_user.get('avatarUrl')
+    cashbox = Decimal(json_user.get('cashbox'))
 #    if body is None or body = '':
 #      raise ValidationError('user does not hava a name')
-    return User(openId=openId, nickName=nickName, gender=gender, city=city, province=province, country=country, avatarUrl=avatarUrl)
+    return User(openId=openId, nickName=nickName, gender=gender, city=city, province=province, country=country, avatarUrl=avatarUrl, cashbox=cashbox)
 
   # 生成初始数据
   @staticmethod
   def generate_users():
-    user = User(id=1, openId='oAk3s0Bef6kcKKf0waVJvDUlrShE', nickName=u'飘移', gender=1, city='Jinan', province='Shandong', country='CN', avatarUrl='http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL04eZJ57hiaQcuWk4kT5vvY6Epmmo6smJ94ejJqWZrbTIriaftjBhvDfeIwsxBTM5hibpXx3CiaC9T0Q/0')
+    user = User(id=1, openId='oAk3s0Bef6kcKKf0waVJvDUlrShE', nickName=u'飘移', gender=1, city='Jinan', province='Shandong', country='CN', avatarUrl='http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL04eZJ57hiaQcuWk4kT5vvY6Epmmo6smJ94ejJqWZrbTIriaftjBhvDfeIwsxBTM5hibpXx3CiaC9T0Q/0', cashbox='0.0')
     db.session.add(user)
     try:
       db.session.commit()

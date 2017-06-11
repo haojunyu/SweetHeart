@@ -7,6 +7,7 @@ from app.exceptions import ValidationError
 from ..models import User
 from .. import db
 import requests, json
+from decimal import Decimal
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -38,14 +39,14 @@ def login():
     if decrypt(session_key, encryptedData, iv) != data['appid']:
       raise ValidationError('Invalid encryptedData!')
 
-    # 默认用户为老用户
+    # 默认是老客户
     is_first = False
 
     # 根据openid是否插入用户
     user = User.query.filter_by(openId=openid).first()
     if user is None:
-      is_first = True
       print('add user: %s' % rawData)
+      is_first = True
       rData = json.loads(rawData)
       user = User(openId=openid,
                   nickName=rData['nickName'],
@@ -53,7 +54,8 @@ def login():
                   city = rData['city'],
                   province = rData['province'],
                   country = rData['country'],
-                  avatarUrl = rData['avatarUrl'])
+                  avatarUrl = rData['avatarUrl'],
+                  cashbox = 0)
       db.session.add(user)
       db.session.commit()
 
