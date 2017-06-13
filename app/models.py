@@ -383,3 +383,45 @@ class Order(db.Model):
       print 'fail to generate orders'
 
 
+####### class Config --> table config
+class Config(db.Model):
+  __tablename__ = 'config'
+  id = db.Column(db.Integer, primary_key=True)
+  key = db.Column(db.String(64), unique=True, nullable=False)
+  value = db.Column(db.String(128), nullable=False)
+
+  def __repr__(self):
+    return 'Config: %r' % (self.key)
+
+  # 序列化转换: 资源->JSON
+  def to_json(self):
+    json_config = {
+      'uri'   : url_for('api.get_config', id=self.id, _external=True),
+      'key' : self.key,
+      'value' : self.value
+    }
+    return json_config
+
+  # 序列化转换：JSON->资源
+  @staticmethod
+  def from_json(json_config):
+    key = json_config.get('key')
+    value = json_config.get('value')
+    return Config(key=key, value=value)
+
+  # 生成初始数据
+  @staticmethod
+  def generate_configs():
+    keys = ['mch_name', 'valid_user_cash', 'invalid_user_cash']
+    values = [u'甜点密语烘焙店', '2.0', '1.0']
+    for i in range(len(keys)):
+      config = Config(id=i+1, key=keys[i], value=values[i])
+      db.session.add(config)
+    try:
+      db.session.commit()
+      print 'generate configs successfully'
+    except IntegrityError:
+      db.session.rollback()
+      print 'fail to generate configs'
+
+

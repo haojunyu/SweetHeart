@@ -4,7 +4,7 @@ from . import auth
 from flask import request, current_app, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
 from app.exceptions import ValidationError
-from ..models import User
+from ..models import User, Config
 from .. import db
 import requests, json
 from decimal import Decimal
@@ -63,17 +63,16 @@ def login():
     login_user(user, True)
     token = user.generate_auth_token(expiration=expires_in)
     print 'token: %s' % token
-    return jsonify({'userId': user.id, 'is_first':is_first, 'token': token,'expiration': expires_in})
+    return jsonify({'userId': user.id, 'is_first':is_first, 'cashbox':str(user.cashbox), 'token': token,'expiration': expires_in})
 
   return str(res)
-
 
 @auth.route('/secret')
 #@login_required
 def secret():
   return 'only authenticated users are allowed!'
 
-# 延签数据
+# 验签数据
 import hashlib
 def sha1Sign(session_key, rawData):
   print rawData.encode('utf-8')

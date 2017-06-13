@@ -37,3 +37,11 @@ def user_get_ticket(id):
   db.session.add(user)
   db.session.commit()
   return jsonify(user.to_json())
+
+@api.route('/users/<int:id>/subCash', methods=['PUT'])
+def user_consume_cashbox(id):
+  user = User.query.get_or_404(id)
+  user.cashbox -= Decimal(request.json.get('cash', '0.0'))
+  db.session.add(user)
+  db.session.commit()
+  return jsonify(user.to_json())
