@@ -15,6 +15,17 @@ def get_orders():
     ords.append(order.to_json(user, cake))
   return jsonify({'orders' : ords})
 
+@api.route('/orders/status/<int:statusNum>')
+def get_orders_statusNum(statusNum):
+  print statusNum
+  orders = Order.query.filter_by(status=statusNum).all()
+  ords = [];
+  for order in orders:
+    user = order.user.to_json()
+    cake = order.cake.to_json()
+    ords.append(order.to_json(user, cake))
+  return jsonify({'orders' : ords})
+
 @api.route('/users/<int:userId>/orders/statusNum')
 def get_user_orders_statusNum(userId):
   statusNum = {}

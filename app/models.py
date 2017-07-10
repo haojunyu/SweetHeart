@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
   cashbox = db.Column(db.Numeric(8,2), default=0.0)
   comments = db.relationship('Comment', backref='user', lazy='dynamic')
   orders = db.relationship('Order', backref='user', lazy='dynamic')
+  cTimestamp = db.Column(db.DateTime, index=True, default=datetime.now())
 
   def __repr__(self):
     return 'User %r' % self.nickName
@@ -38,7 +39,8 @@ class User(UserMixin, db.Model):
       'province'  : self.province,
       'country'  : self.country,
       'avatarUrl'  : self.avatarUrl,
-      'cashbox' : str(self.cashbox)
+      'cashbox' : str(self.cashbox),
+      'cTimestamp': self.cTimestamp.strftime('%Y-%m-%d')
     }
     return json_user
 
@@ -197,28 +199,28 @@ class Cake(db.Model):
   def generate_cakes():
     cakeNames = ['creamCake', 'fruitCake', 'personalCake', 'mousseCake', 'flowerCake', 'layerCake', 'paperCake']
     cakeDescs = [u'鲜奶蛋糕', u'水果蛋糕', u'个性蛋糕', u'慕斯蛋糕', u'鲜花蛋糕', u'千层蛋糕', u'纸杯蛋糕']
-    cakePrices = [58, 58, 118, 78, 78, 128, 32.8]
+    cakePrices = [68, 68, 128, 88, 88, 138, 33.8]
     for i in range(len(cakeNames)):
       cake = Cake(id=i+11, name=cakeNames[i], desc=cakeDescs[i], detail=u'这是'+cakeDescs[i], price=cakePrices[i], imgUrl=cakeNames[i]+'.jpg', stars=3.0, cateId=1)
       db.session.add(cake)
 
     cookNames = ['cookies', 'marguerite', 'cartoonCookies', 'cranberryCookies', 'xlkq']
     cookDescs = [u'曲奇饼干', u'玛格丽特', u'卡通饼干', u'蔓越莓饼干', u'昔腊可求']
-    cookPrices = [32.8, 32.8, 32.8, 32.8, 32.8]
+    cookPrices = [33.8, 33.8, 33.8, 33.8, 33.8]
     for i in range(len(cookNames)):
       cook = Cake(id=i+21, name=cookNames[i], desc=cookDescs[i], detail=u'这是'+cookDescs[i], price=cookPrices[i], imgUrl=cookNames[i]+'.jpg', stars=3.0, cateId=2)
       db.session.add(cook)
 
     puddNames = ['creamPudding', 'mangoPudding', 'strawberryPudding', 'blueberryPudding']
     puddDescs = [u'奶油布丁', u'芒果布丁', u'草莓布丁', u'蓝莓布丁']
-    puddPrices = [32.8, 32.8, 32.8, 32.8]
+    puddPrices = [33.8, 33.8, 33.8, 33.8]
     for i in range(len(puddNames)):
       pudd = Cake(id=i+31, name=puddNames[i], desc=puddDescs[i], detail=u'这是'+puddDescs[i], price=puddPrices[i], imgUrl=puddNames[i]+'.jpg', stars=3.0, cateId=3)
       db.session.add(pudd)
 
     chocNames = ['strawberryChocolate', 'lemonChocolate', 'matchaChocolate', 'whiteMilkChocolate', 'bitterSweetChocolate']
     chocDescs = [u'草莓味巧克力', u'柠檬味巧克力', u'抹茶味巧克力', u'白牛奶味巧克力', u'苦甜味巧克力']
-    chocPrices = [32.8, 32.8, 32.8, 32.8, 32.8]
+    chocPrices = [33.8, 33.8, 33.8, 33.8, 33.8]
     for i in range(len(chocNames)):
       choc = Cake(id=i+41, name=chocNames[i], desc=chocDescs[i], detail=u'这是'+chocDescs[i], price=chocPrices[i], imgUrl=chocNames[i]+'.jpg', stars=3.0, cateId=4)
       db.session.add(choc)
